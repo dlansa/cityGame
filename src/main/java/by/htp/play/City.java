@@ -1,4 +1,4 @@
-package by.htp.entity;
+package by.htp.play;
 
 public class City {
 
