@@ -14,6 +14,7 @@ public class Game {
         play.printIntro();
 
         while (true) {
+            play.readUserInput();
             userMoveResult = play.userMove(computerMoveResult);
 
             if (play.isValidate(userMoveResult)) {

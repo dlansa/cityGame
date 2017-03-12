@@ -11,14 +11,8 @@ import static org.testng.Assert.*;
 
 public class ConditionUserMoveTest {
 
-    // тут какой-то бред, видимо нельзя тестить методы со сканером :/
-
     private Condition condition;
     private Map<City, Integer> cities;
-    private String firstInput;
-    private String anotherInput;
-    private String oneMore;
-    private char lastChar;
 
     @BeforeMethod
     public void setUp() {
@@ -27,10 +21,19 @@ public class ConditionUserMoveTest {
         cities = new HashMap<City, Integer>();
         cities.put(new City("Анапа"), 0);
         condition.setCities(cities);
-        condition.setLastChar(lastChar='d');
-        firstInput = condition.userMove("");            //вводим Анапа (будем проверять, будет ли город помечен как сказанный)
-        anotherInput = condition.userMove("");          //будем проверять, выдаст ли ошибку первой буквы
-        oneMore = condition.userMove("");               //будем провеярть на "существуемость" города
+        condition.isFirstMove(false);
+    }
+
+    @Test
+    public void testUserMove() {
+
+        String compMoveTest = "Мадагаскар";
+        condition.setUsersInput("");
+        assertEquals(GameMessage.COMP_WIN, condition.userMove(compMoveTest));
+
+        condition.setUsersInput("керапр");
+        assertEquals(GameMessage.WRONG_FIRST_LETTER, condition.userMove(compMoveTest));
+
     }
 
     @AfterMethod
@@ -38,12 +41,4 @@ public class ConditionUserMoveTest {
         condition = null;
         cities = null;
     }
-
-    @Test(enabled = false)
-    public void testUserMove() {
-        assertTrue(cities.get("Анапа") == 1);
-        assertFalse(anotherInput.toLowerCase().charAt(0) == lastChar);
-        assertEquals(GameMessage.DONT_EXIST, oneMore);
-    }
-
 }

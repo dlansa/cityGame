@@ -17,6 +17,7 @@ public class Condition {
     private Map<City, Integer> cities;
     private char lastChar;
     private boolean isFirstMove = true;
+    private String usersInput;
 
     public Condition() {
     }
@@ -34,18 +35,17 @@ public class Condition {
     }
 
     public String userMove(String compCity) {
-        Scanner scanner = new Scanner(System.in);
-        String city = scanner.nextLine();
         String message;
         if (isFirstMove) {
             isFirstMove = false;
-            lastChar = getLastChar(city);
-            markAsUsed(city);
-            return city;
-        } else if (city.isEmpty())
+            lastChar = getLastChar(usersInput);
+            markAsUsed(usersInput);
+            return usersInput;
+        }
+        else if (usersInput.isEmpty())
             message = GameMessage.COMP_WIN;
         else
-            message = checkPlayerCity(city);
+            message = checkPlayerCity(usersInput);
         return message;
     }
 
@@ -138,5 +138,22 @@ public class Condition {
                 break;
             }
         }
+    }
+
+    public void readUserInput(){
+        Scanner scanner = new Scanner(System.in);
+        this.usersInput = scanner.nextLine();
+    }
+
+    public String getUsersInput() {
+        return usersInput;
+    }
+
+    public void setUsersInput(String usersInput) {
+        this.usersInput = usersInput;
+    }
+
+    public void isFirstMove(boolean firstMove) {
+        isFirstMove = firstMove;
     }
 }
